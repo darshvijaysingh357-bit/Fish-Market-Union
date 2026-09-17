@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Fish Market Union (FOMU) — Reclaim Your Time</title>
+<meta name="description" content="A student-led movement demanding real breaks, cooler classrooms, exam security, homework caps, and dignity. Audit your schedule and sign the petition.">
+<meta name="theme-color" content="#0B0F19">
+<meta property="og:title" content="The Fish Market Union (FOMU)">
+<meta property="og:description" content="Reclaiming student dignity, sleep, and the FOMO of Free Time.">
+<meta property="og:type" content="website">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bgdark: '#0B0F19',
+          surface: '#1E293B',
+          fmyellow: { DEFAULT: '#FACC15', light: '#FDE047' },
+          fmpink: { DEFAULT: '#EC4899', light: '#F472B6' },
+        },
+        fontFamily: {
+          display: ['Anton', 'sans-serif'],
+          body: ['Inter', 'sans-serif'],
+          mono: ['"Space Mono"', 'monospace'],
+        },
+      }
+    }
+  }
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { overflow-x: hidden; }
+  section, header#hero { scroll-margin-top: 4.5rem; }
+
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #0B0F19; }
+  ::-webkit-scrollbar-thumb { background: #334155; border: 2px solid #0B0F19; }
+  ::-webkit-scrollbar-thumb:hover { background: #FACC15; }
+
+  .custom-scroll::-webkit-scrollbar { width: 6px; }
+  .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+  .custom-scroll::-webkit-scrollbar-thumb { background: #475569; }
+
+  .text-gradient {
+    background-image: linear-gradient(135deg, #FACC15, #EC4899);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .notebook-lines {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 31px,
+      rgba(148,163,184,0.09) 31px,
+      rgba(148,163,184,0.09) 32px
+    );
+  }
+
+  .perforation {
+    height: 3px;
+    background-image: radial-gradient(circle, #475569 1.5px, transparent 1.6px);
+    background-size: 9px 3px;
+    background-repeat: repeat-x;
+    background-position: center;
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    background: #334155;
+    outline: none;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    background: #FACC15;
+    border: 3px solid #0B0F19;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 0 #EC4899;
+    transition: transform .15s ease;
+    margin-top: -8px;
+  }
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.1); }
+  input[type="range"]::-moz-range-track {
+    height: 6px;
+    background: #334155;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    background: #FACC15;
+    border: 3px solid #0B0F19;
+    border-radius: 0;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 0 #EC4899;
+  }
+
+  select {
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 0.9rem;
+    padding-right: 2.5rem;
+  }
+
+  .demand-card .detail-wrap {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .35s ease;
+  }
+  .demand-card .detail-inner { overflow: hidden; }
+  .demand-card.expanded .detail-wrap { grid-template-rows: 1fr; }
+  .demand-card .chevron { transition: transform .3s ease; }
+  .demand-card.expanded .chevron { transform: rotate(180deg); }
+
+  .marquee-wrap {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    gap: .6rem;
+    animation: marquee 32s linear infinite;
+  }
+  .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @keyframes entrySlide {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .signer-entry { animation: entrySlide .4s ease; }
+
+  @keyframes pulseScale {
+    0% { transform: scale(1); }
+    35% { transform: scale(1.12); }
+    100% { transform: scale(1); }
+  }
+  .pulse-once { animation: pulseScale .45s ease; display: inline-block; }
+
+  #toastContainer {
+    position: fixed;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: .5rem;
+    align-items: center;
+    width: calc(100% - 2rem);
+    max-width: 380px;
+    pointer-events: none;
+  }
+  @media (min-width: 768px) {
+    #toastContainer { left: auto; right: 1.5rem; transform: none; align-items: flex-end; }
+  }
+  .toast {
+    background: #1E293B;
+    border: 1px solid #334155;
+    border-left: 4px solid #FACC15;
+    color: #F1F5F9;
+    padding: .85rem 1.1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: .875rem;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity .3s ease, transform .3s ease;
+    pointer-events: auto;
+    width: 100%;
+  }
+  .toast.error { border-left-color: #EF4444; }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  a:focus-visible, button:focus-visible, select:focus-visible, .demand-card:focus-visible {
+    outline: 2px solid #FACC15;
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body class="bg-bgdark text-slate-200 font-body antialiased">
+
+<nav class="sticky top-0 z-50 backdrop-blur bg-bgdark/90 border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
+    <a href="#hero" class="flex items-center gap-2 font-display text-lg tracking-wide">
+      <span class="text-xl">🐟</span> FOMU
+    </a>
+    <div class="hidden md:flex items-center gap-8 font-mono text-xs uppercase tracking-wide text-slate-300">
+      <a href="#demands" class="hover:text-fmyellow transition-colors">Demands</a>
+      <a href="#calculator" class="hover:text-fmyellow transition-colors">Calculator</a>
+      <a href="#petition" class="hover:text-fmyellow transition-colors">Petition</a>
+      <a href="#share" class="hover:text-fmyellow transition-colors">Share</a>
+    </div>
+    <div class="hidden md:block">
+      <a href="#petition" class="inline-flex items-center gap-2 bg-fmyellow text-bgdark font-display uppercase tracking-wide text-xs px-5 py-2.5 shadow-[3px_3px_0_0_#EC4899] hover:shadow-[5px_5px_0_0_#EC4899] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[1px_1px_0_0_#EC4899] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-150">
+        Sign Now
+      </a>
+    </div>
+    <button id="menuBtn" aria-label="Toggle menu" aria-expanded="false" class="md:hidden w-10 h-10 flex items-center justify-center border border-white/10 text-slate-200">
+      <svg id="menuIconOpen" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <svg id="menuIconClose" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div id="mobileMenu" class="hidden md:hidden border-t border-white/10 bg-bgdark px-5 py-4 flex flex-col gap-4 font-mono text-xs uppercase tracking-wide text-slate-300">
+    <a href="#demands" class="hover:text-fmyellow">Demands</a>
+    <a href="#calculator" class="hover:text-fmyellow">Calculator</a>
+    <a href="#petition" class="hover:text-fmyellow">Petition</a>
+    <a href="#share" class="hover:text-fmyellow">Share</a>
+    <a href="#petition" class="inline-flex justify-center items-center gap-2 bg-fmyellow text-bgdark font-display normal-case tracking-wide px-5 py-2.5 mt-1 shadow-[3px_3px_0_0_#EC4899]">Sign Now</a>
+  </div>
+</nav>
+
+<header id="hero" class="relative notebook-lines">
+  <div class="max-w-5xl mx-auto px-5 sm:px-8 pt-16 pb-14 md:pt-24 md:pb-16 text-center relative z-10">
+
+    <div class="inline-flex items-center gap-2.5 -rotate-2 bg-fmyellow text-bgdark px-4 py-2 font-mono text-[11px] sm:text-xs font-bold tracking-widest uppercase mb-10 shadow-[4px_4px_0_0_#EC4899]">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-bgdark opacity-60"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-bgdark"></span>
+      </span>
+      Live — <span class="signature-counter">···</span> Signatures
+    </div>
+
+    <h1 class="font-display font-normal uppercase text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight mb-4">
+      The Fish Market Union
+    </h1>
+    <p class="font-mono text-base sm:text-lg tracking-[0.25em] text-fmpink font-bold mb-8">(FOMU)</p>
+
+    <p class="text-base sm:text-lg md:text-xl text-slate-400 max-w-xl mx-auto mb-10 font-medium">
+      Reclaiming student dignity, sleep, and the <span class="text-white">FOMO of Free Time.</span>
+    </p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+      <a href="#petition" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-fmyellow text-bgdark font-display uppercase tracking-wide text-sm sm:text-base px-8 py-4 shadow-[4px_4px_0_0_#EC4899] hover:shadow-[6px_6px_0_0_#EC4899] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[1px_1px_0_0_#EC4899] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-150">
+        Sign the Petition
+      </a>
+      <a href="#calculator" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-bgdark border-2 border-fmpink text-white font-display uppercase tracking-wide text-sm sm:text-base px-8 py-4 shadow-[4px_4px_0_0_#FACC15] hover:shadow-[6px_6px_0_0_#FACC15] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[1px_1px_0_0_#FACC15] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-150">
+        Audit My Schedule
+      </a>
+    </div>
+  </div>
+
+  <div class="relative z-10 border-y border-white/10 bg-surface/60 py-3">
+    <div class="marquee-wrap">
+      <div id="marqueeTrack" class="marquee-track"></div>
+    </div>
+  </div>
+</header>
+
+<section id="demands" class="max-w-7xl mx-auto px-5 sm:px-8 py-16 sm:py-20 md:py-28">
+  <div class="max-w-2xl mb-12">
+    <span class="font-mono text-xs tracking-widest uppercase text-fmpink">Our Demands</span>
+    <h2 class="font-display font-normal text-3xl sm:text-4xl md:text-5xl mt-3 mb-4 leading-tight">Five things we're done asking nicely for.</h2>
+    <p class="text-slate-400 text-base sm:text-lg">Tap a card to see why it matters. These aren't luxuries — they're the bare minimum.</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+    <div class="demand-card relative bg-surface border border-white/10 p-6 sm:p-7 cursor-pointer hover:border-fmyellow/50 transition-colors duration-200" tabindex="0" role="button" aria-expanded="false">
+      <span class="inline-block font-mono text-[10px] font-bold tracking-widest bg-fmyellow text-bgdark px-2.5 py-1 -rotate-1 shadow-[3px_3px_0_0_#EC4899] mb-5">DEMAND NO. 01</span>
+      <div class="w-11 h-11 bg-fmyellow/10 flex items-center justify-center text-xl mb-4">⏱️</div>
+      <h3 class="font-display font-normal text-lg sm:text-xl mb-2 leading-snug">40-Min Breaks & Class Reset Buffers</h3>
+      <p class="text-slate-400 text-sm">Real breaks between classes to breathe, refuel, and reset — not a five-minute sprint down the hallway.</p>
+      <div class="flex items-center gap-1.5 font-mono text-fmyellow text-[11px] font-bold tracking-wide mt-4">
+        WHY IT MATTERS
+        <svg class="chevron w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="detail-wrap">
+        <div class="detail-inner">
+          <p class="text-slate-400 text-sm pt-4 border-t border-dashed border-white/10 mt-4">The brain needs downtime to consolidate what it just learned. Back-to-back periods with zero buffer just trade attention for exhaustion — and everyone pays for it by 6th period.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demand-card relative bg-surface border border-white/10 p-6 sm:p-7 cursor-pointer hover:border-fmpink/50 transition-colors duration-200" tabindex="0" role="button" aria-expanded="false">
+      <span class="inline-block font-mono text-[10px] font-bold tracking-widest bg-fmpink text-bgdark px-2.5 py-1 rotate-1 shadow-[3px_3px_0_0_#FACC15] mb-5">DEMAND NO. 02</span>
+      <div class="w-11 h-11 bg-fmpink/10 flex items-center justify-center text-xl mb-4">🌡️</div>
+      <h3 class="font-display font-normal text-lg sm:text-xl mb-2 leading-snug">Climate Protection & Classroom Cooling</h3>
+      <p class="text-slate-400 text-sm">Working fans, proper ventilation, and real heat-safety protocols. Nobody learns calculus at 40°C.</p>
+      <div class="flex items-center gap-1.5 font-mono text-fmpink text-[11px] font-bold tracking-wide mt-4">
+        WHY IT MATTERS
+        <svg class="chevron w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="detail-wrap">
+        <div class="detail-inner">
+          <p class="text-slate-400 text-sm pt-4 border-t border-dashed border-white/10 mt-4">Heat stress measurably tanks concentration and memory. Asking students to sit exams in a furnace isn't rigor, it's negligence.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demand-card relative bg-surface border border-white/10 p-6 sm:p-7 cursor-pointer hover:border-fmyellow/50 transition-colors duration-200" tabindex="0" role="button" aria-expanded="false">
+      <span class="inline-block font-mono text-[10px] font-bold tracking-widest bg-fmyellow text-bgdark px-2.5 py-1 -rotate-2 shadow-[3px_3px_0_0_#EC4899] mb-5">DEMAND NO. 03</span>
+      <div class="w-11 h-11 bg-fmyellow/10 flex items-center justify-center text-xl mb-4">🔒</div>
+      <h3 class="font-display font-normal text-lg sm:text-xl mb-2 leading-snug">Anti-Paper Leak Security & Transparency</h3>
+      <p class="text-slate-400 text-sm">Tamper-proof exam handling and transparent grading. No more surprise retests because someone's paper leaked.</p>
+      <div class="flex items-center gap-1.5 font-mono text-fmyellow text-[11px] font-bold tracking-wide mt-4">
+        WHY IT MATTERS
+        <svg class="chevron w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="detail-wrap">
+        <div class="detail-inner">
+          <p class="text-slate-400 text-sm pt-4 border-t border-dashed border-white/10 mt-4">Every leak punishes honest students twice — once with a rushed re-exam, and once with the message that the system protecting their work can't be trusted.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demand-card relative bg-surface border border-white/10 p-6 sm:p-7 cursor-pointer hover:border-fmpink/50 transition-colors duration-200" tabindex="0" role="button" aria-expanded="false">
+      <span class="inline-block font-mono text-[10px] font-bold tracking-widest bg-fmpink text-bgdark px-2.5 py-1 rotate-2 shadow-[3px_3px_0_0_#FACC15] mb-5">DEMAND NO. 04</span>
+      <div class="w-11 h-11 bg-fmpink/10 flex items-center justify-center text-xl mb-4">📚</div>
+      <h3 class="font-display font-normal text-lg sm:text-xl mb-2 leading-snug">Daily Homework Time Caps</h3>
+      <p class="text-slate-400 text-sm">A hard ceiling on daily homework load — because evenings and weekends are supposed to exist too.</p>
+      <div class="flex items-center gap-1.5 font-mono text-fmpink text-[11px] font-bold tracking-wide mt-4">
+        WHY IT MATTERS
+        <svg class="chevron w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="detail-wrap">
+        <div class="detail-inner">
+          <p class="text-slate-400 text-sm pt-4 border-t border-dashed border-white/10 mt-4">Run the numbers in the calculator below — stacked homework and coaching hours are usually where "free time" quietly goes to die.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demand-card relative bg-surface border border-white/10 p-6 sm:p-7 cursor-pointer hover:border-fmyellow/50 transition-colors duration-200" tabindex="0" role="button" aria-expanded="false">
+      <span class="inline-block font-mono text-[10px] font-bold tracking-widest bg-fmyellow text-bgdark px-2.5 py-1 -rotate-1 shadow-[3px_3px_0_0_#EC4899] mb-5">DEMAND NO. 05</span>
+      <div class="w-11 h-11 bg-fmyellow/10 flex items-center justify-center text-xl mb-4">🚫</div>
+      <h3 class="font-display font-normal text-lg sm:text-xl mb-2 leading-snug">End Demeaning Micro-management</h3>
+      <p class="text-slate-400 text-sm">Trust over surveillance. No public shaming, no ruler-measuring uniforms, no policing every small thing.</p>
+      <div class="flex items-center gap-1.5 font-mono text-fmyellow text-[11px] font-bold tracking-wide mt-4">
+        WHY IT MATTERS
+        <svg class="chevron w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="detail-wrap">
+        <div class="detail-inner">
+          <p class="text-slate-400 text-sm pt-4 border-t border-dashed border-white/10 mt-4">Treating teenagers like suspects doesn't build discipline, it builds resentment. Respect is a two-way street, even in a classroom.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="calculator" class="max-w-7xl mx-auto px-5 sm:px-8 py-16 sm:py-20 md:py-28">
+  <div class="max-w-2xl mb-12">
+    <span class="font-mono text-xs tracking-widest uppercase text-fmyellow">Reality Check</span>
+    <h2 class="font-display font-normal text-3xl sm:text-4xl md:text-5xl mt-3 mb-4 leading-tight">The FOMO of Free Time Calculator</h2>
+    <p class="text-slate-400 text-base sm:text-lg">Let's do the math your timetable is hoping you never do.</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <div class="bg-surface border border-white/10 p-6 sm:p-8">
+      <p class="font-mono text-xs tracking-widest text-fmpink uppercase mb-7">⚖ Weigh your day</p>
+
+      <div class="mb-8">
+        <div class="flex items-center justify-between mb-3">
+          <label for="schoolHours" class="font-semibold text-sm sm:text-base">🏫 Hours in school</label>
+          <span id="schoolVal" class="font-mono font-bold text-fmyellow text-base">8.0h</span>
+        </div>
+        <input type="range" id="schoolHours" min="0" max="12" step="0.5" value="8">
+      </div>
+      <div class="mb-8">
+        <div class="flex items-center justify-between mb-3">
+          <label for="homeworkHours" class="font-semibold text-sm sm:text-base">📖 Homework / coaching</label>
+          <span id="homeworkVal" class="font-mono font-bold text-fmpink text-base">3.0h</span>
+        </div>
+        <input type="range" id="homeworkHours" min="0" max="10" step="0.5" value="3">
+      </div>
+      <div class="mb-2">
+        <div class="flex items-center justify-between mb-3">
+          <label for="sleepHours" class="font-semibold text-sm sm:text-base">😴 Hours of sleep</label>
+          <span id="sleepVal" class="font-mono font-bold text-indigo-400 text-base">7.0h</span>
+        </div>
+        <input type="range" id="sleepHours" min="0" max="12" step="0.5" value="7">
+      </div>
+      <p class="text-xs text-slate-500 mt-6">*Out of a 24-hour day. Yes, meals and commuting exist too — that's kind of the point.</p>
+    </div>
+
+    <div class="bg-surface border border-white/10">
+      <div class="perforation"></div>
+      <div class="px-6 sm:px-8 py-7 font-mono">
+        <p class="text-center text-[11px] tracking-[0.3em] text-slate-500 mb-6">✦ FOMU TIME RECEIPT ✦</p>
+        <div class="space-y-2.5 text-sm border-b border-dashed border-white/15 pb-5 mb-5">
+          <div class="flex justify-between"><span class="text-slate-400">School</span><span id="rcSchool" class="text-white">8.0h</span></div>
+          <div class="flex justify-between"><span class="text-slate-400">Homework</span><span id="rcHomework" class="text-white">3.0h</span></div>
+          <div class="flex justify-between"><span class="text-slate-400">Sleep</span><span id="rcSleep" class="text-white">7.0h</span></div>
+        </div>
+        <div class="flex justify-between items-center mb-1">
+          <span class="font-display font-normal uppercase text-sm tracking-wide">Free Time</span>
+          <span id="freeTimeResult" class="font-display font-normal text-4xl sm:text-5xl">6.0h</span>
+        </div>
+        <div class="text-center mt-6">
+          <span id="statusBadge" class="inline-block font-mono text-xs font-bold tracking-widest uppercase px-3 py-1.5 border">Breaking Even</span>
+        </div>
+        <p id="commentaryText" class="font-body text-sm text-slate-400 text-center mt-4 leading-relaxed">Now we're talking.</p>
+      </div>
+      <div class="perforation"></div>
+      <p class="font-mono text-[10px] text-slate-600 text-center py-3 tracking-wide">thank you for surviving the semester</p>
+    </div>
+
+  </div>
+</section>
+
+<section id="petition" class="max-w-7xl mx-auto px-5 sm:px-8 py-16 sm:py-20 md:py-28">
+  <div class="max-w-2xl mb-12">
+    <span class="font-mono text-xs tracking-widest uppercase text-fmpink">Make It Official</span>
+    <h2 class="font-display font-normal text-3xl sm:text-4xl md:text-5xl mt-3 mb-4 leading-tight">Sign the Petition</h2>
+    <p class="text-slate-400 text-base sm:text-lg">Add your name. Every signature makes the union harder to ignore.</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <form id="petitionForm" class="bg-surface border border-white/10 p-6 sm:p-8">
+      <div class="mb-5">
+        <label for="fullName" class="block text-sm font-semibold mb-2">Full Name</label>
+        <input type="text" id="fullName" required maxlength="60" placeholder="e.g., Ananya Rao" class="w-full bg-bgdark border border-white/10 px-4 py-3 text-sm focus:outline-none focus:border-fmyellow transition-colors placeholder:text-slate-600">
+      </div>
+      <div class="mb-5">
+        <label for="gradeSchool" class="block text-sm font-semibold mb-2">Grade / School</label>
+        <input type="text" id="gradeSchool" required maxlength="80" placeholder="e.g., Class 11, Delhi Public School" class="w-full bg-bgdark border border-white/10 px-4 py-3 text-sm focus:outline-none focus:border-fmyellow transition-colors placeholder:text-slate-600">
+      </div>
+      <div class="mb-6">
+        <label for="mainComplaint" class="block text-sm font-semibold mb-2">Main Complaint</label>
+        <select id="mainComplaint" class="w-full bg-bgdark border border-white/10 px-4 py-3 text-sm focus:outline-none focus:border-fmyellow transition-colors">
+          <option>40-Min Breaks & Class Reset</option>
+          <option>Climate Protection & Cooling</option>
+          <option>Anti-Paper Leak Security</option>
+          <option>Daily Homework Time Caps</option>
+          <option>End Demeaning Micro-management</option>
+          <option>Something else entirely</option>
+        </select>
+      </div>
+      <button type="submit" class="w-full bg-fmyellow text-bgdark font-display uppercase tracking-wide text-sm py-3.5 shadow-[4px_4px_0_0_#EC4899] hover:shadow-[6px_6px_0_0_#EC4899] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[1px_1px_0_0_#EC4899] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-150">
+        Sign the Petition
+      </button>
+      <p class="text-xs text-slate-500 mt-4 text-center">Your signature is saved securely and counted for everyone who visits.</p>
+    </form>
+
+    <div class="bg-surface border border-white/10 p-6 sm:p-8 flex flex-col">
+      <h3 class="font-display font-normal text-lg mb-4">Recent Signers</h3>
+      <div id="signersFeed" class="custom-scroll flex flex-col gap-3 overflow-y-auto pr-1" style="max-height: 420px;">
+        <p class="text-sm text-slate-500 text-center py-6">Loading recent signatures…</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="share" class="max-w-4xl mx-auto px-5 sm:px-8 py-16 sm:py-20 md:py-24 text-center">
+  <p class="font-mono text-xs tracking-[0.3em] text-slate-500 uppercase mb-6">— Overheard about us —</p>
+  <p class="font-display font-normal text-2xl sm:text-4xl md:text-5xl leading-snug max-w-3xl mx-auto">
+    "If you're going to call us a <span class="text-gradient">fish market</span>, don't be surprised when we start making noise."
+  </p>
+
+  <div class="flex flex-wrap items-center justify-center gap-4 mt-12">
+    <button type="button" id="copyShareBtn" class="inline-flex items-center gap-2 bg-fmyellow text-bgdark font-display uppercase tracking-wide text-sm px-6 py-3.5 shadow-[4px_4px_0_0_#EC4899] hover:shadow-[6px_6px_0_0_#EC4899] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[1px_1px_0_0_#EC4899] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-150">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+      Copy Share Link
+    </button>
+    <button type="button" id="shareWhatsapp" aria-label="Share on WhatsApp" class="w-12 h-12 flex items-center justify-center border border-white/15 hover:border-fmpink/50 hover:bg-fmpink/10 transition-all text-xl">💬</button>
+    <button type="button" id="shareTwitter" aria-label="Share on X" class="w-12 h-12 flex items-center justify-center border border-white/15 hover:border-fmpink/50 hover:bg-fmpink/10 transition-all text-lg font-bold">𝕏</button>
+  </div>
+</section>
+
+<footer class="border-t border-white/10">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 py-10">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div>
+        <span class="flex items-center gap-2 font-display text-lg mb-1">🐟 FOMU</span>
+        <p class="text-sm text-slate-500 max-w-sm">Made with stubbornness by students, for students.</p>
+      </div>
+      <div class="flex gap-6 font-mono text-xs uppercase tracking-wide text-slate-400">
+        <a href="#demands" class="hover:text-fmyellow transition-colors">Demands</a>
+        <a href="#calculator" class="hover:text-fmyellow transition-colors">Calculator</a>
+        <a href="#petition" class="hover:text-fmyellow transition-colors">Petition</a>
+      </div>
+    </div>
+    <div class="border-t border-white/10 mt-8 pt-6 font-mono text-[10px] text-slate-600 tracking-wide">
+      © 2026 THE FISH MARKET UNION — A FICTIONAL DEMO ADVOCACY SITE. NOT AFFILIATED WITH ANY ACTUAL FISH MARKET.
+    </div>
+  </div>
+</footer>
+
+<div id="toastContainer" aria-live="polite"></div>
+
+<script>
+(function() {
+  var complaintColors = {
+    '40-Min Breaks & Class Reset': 'yellow',
+    'Climate Protection & Cooling': 'pink',
+    'Anti-Paper Leak Security': 'yellow',
+    'Daily Homework Time Caps': 'pink',
+    'End Demeaning Micro-management': 'yellow',
+    'Something else entirely': 'pink'
+  };
+
+  var API_BASE = '/api/petition';
+  var GOAL = 2000;
+  var signatureCount = 0;
+  var signers = [];
+
+  function timeAgo(dateStr) {
+    var then = new Date(dateStr).getTime();
+    if (isNaN(then)) return 'just now';
+    var diffSec = Math.max(0, Math.floor((Date.now() - then) / 1000));
+    if (diffSec < 60) return 'just now';
+    var diffMin = Math.floor(diffSec / 60);
+    if (diffMin < 60) return diffMin + (diffMin === 1 ? ' min ago' : ' mins ago');
+    var diffHr = Math.floor(diffMin / 60);
+    if (diffHr < 24) return diffHr + (diffHr === 1 ? ' hour ago' : ' hours ago');
+    var diffDay = Math.floor(diffHr / 24);
+    return diffDay + (diffDay === 1 ? ' day ago' : ' days ago');
+  }
+
+  function escapeHTML(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function initials(name) {
+    return name.trim().split(/\s+/).map(function(w) { return w[0]; }).join('').slice(0, 2).toUpperCase();
+  }
+
+  function showToast(message, type) {
+    type = type || 'success';
+    var container = document.getElementById('toastContainer');
+    var toast = document.createElement('div');
+    toast.className = 'toast' + (type === 'error' ? ' error' : '');
+    toast.textContent = message;
+    container.appendChild(toast);
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() { toast.classList.add('show'); });
+    });
+    setTimeout(function() {
+      toast.classList.remove('show');
+      setTimeout(function() { toast.remove(); }, 350);
+    }, 3200);
+  }
+
+  /* Mobile menu */
+  var menuBtn = document.getElementById('menuBtn');
+  var mobileMenu = document.getElementById('mobileMenu');
+  var menuIconOpen = document.getElementById('menuIconOpen');
+  var menuIconClose = document.getElementById('menuIconClose');
+  menuBtn.addEventListener('click', function() {
+    var isHidden = mobileMenu.classList.toggle('hidden');
+    menuBtn.setAttribute('aria-expanded', String(!isHidden));
+    menuIconOpen.classList.toggle('hidden', !isHidden);
+    menuIconClose.classList.toggle('hidden', isHidden);
+  });
+  document.querySelectorAll('#mobileMenu a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      mobileMenu.classList.add('hidden');
+      menuIconOpen.classList.remove('hidden');
+      menuIconClose.classList.add('hidden');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* Demand cards */
+  document.querySelectorAll('.demand-card').forEach(function(card) {
+    function toggle() {
+      var expanded = card.classList.toggle('expanded');
+      card.setAttribute('aria-expanded', String(expanded));
+    }
+    card.addEventListener('click', toggle);
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+  });
+
+  /* Calculator */
+  var schoolSlider = document.getElementById('schoolHours');
+  var homeworkSlider = document.getElementById('homeworkHours');
+  var sleepSlider = document.getElementById('sleepHours');
+  var schoolVal = document.getElementById('schoolVal');
+  var homeworkVal = document.getElementById('homeworkVal');
+  var sleepVal = document.getElementById('sleepVal');
+  var rcSchool = document.getElementById('rcSchool');
+  var rcHomework = document.getElementById('rcHomework');
+  var rcSleep = document.getElementById('rcSleep');
+  var freeTimeResult = document.getElementById('freeTimeResult');
+  var statusBadge = document.getElementById('statusBadge');
+  var commentaryText = document.getElementById('commentaryText');
+
+  function fillSlider(slider) {
+    var min = +slider.min, max = +slider.max, val = +slider.value;
+    var pct = ((val - min) / (max - min)) * 100;
+    slider.style.background = 'linear-gradient(to right, #FACC15 ' + pct + '%, #334155 ' + pct + '%)';
+  }
+
+  function tierFor(free) {
+    if (free <= 0) return { label: 'Overdrawn', color: '#EF4444', text: "Negative free time?! That's not a schedule, that's a hostage situation." };
+    if (free <= 2) return { label: 'Running on Fumes', color: '#F97316', text: 'Technically solvent. Barely enough time to microwave dinner and panic quietly.' };
+    if (free <= 4) return { label: 'Breaking Even', color: '#FACC15', text: "A few precious hours. Spend them wisely, or just doomscroll — we don't judge." };
+    if (free <= 6) return { label: 'In Credit', color: '#A3E635', text: "Now we're talking. Enough time left over for a hobby, a nap, or both." };
+    return { label: 'In The Black', color: '#22C55E', text: 'Whoa, an actual childhood. Frame this schedule and mail it to the education board.' };
+  }
+
+  function calculate() {
+    var school = +schoolSlider.value;
+    var homework = +homeworkSlider.value;
+    var sleep = +sleepSlider.value;
+    var free = 24 - school - homework - sleep;
+
+    schoolVal.textContent = school.toFixed(1) + 'h';
+    homeworkVal.textContent = homework.toFixed(1) + 'h';
+    sleepVal.textContent = sleep.toFixed(1) + 'h';
+    rcSchool.textContent = school.toFixed(1) + 'h';
+    rcHomework.textContent = homework.toFixed(1) + 'h';
+    rcSleep.textContent = sleep.toFixed(1) + 'h';
+
+    freeTimeResult.textContent = (free < 0 ? '-' : '') + Math.abs(free).toFixed(1) + 'h';
+    var tier = tierFor(free);
+    freeTimeResult.style.color = tier.color;
+    statusBadge.textContent = tier.label;
+    statusBadge.style.borderColor = tier.color;
+    statusBadge.style.color = tier.color;
+    commentaryText.textContent = tier.text;
+
+    fillSlider(schoolSlider);
+    fillSlider(homeworkSlider);
+    fillSlider(sleepSlider);
+  }
+
+  [schoolSlider, homeworkSlider, sleepSlider].forEach(function(s) {
+    s.addEventListener('input', calculate);
+  });
+  calculate();
+
+  /* Petition rendering */
+  var counterEls = document.querySelectorAll('.signature-counter');
+
+  var marqueeTrack = document.getElementById('marqueeTrack');
+  var signersFeed = document.getElementById('signersFeed');
+
+  function renderCounter() {
+    counterEls.forEach(function(el) { el.textContent = signatureCount.toLocaleString(); });
+  }
+
+
+  function chipColorClasses(complaint) {
+    var c = complaintColors[complaint] || 'yellow';
+    return c === 'pink' ? 'border-fmpink/40 text-fmpink' : 'border-fmyellow/40 text-fmyellow';
+  }
+
+  function avatarClasses(complaint) {
+    var c = complaintColors[complaint] || 'yellow';
+    return c === 'pink' ? 'bg-fmpink/10 border-fmpink/30 text-fmpink' : 'bg-fmyellow/10 border-fmyellow/30 text-fmyellow';
+  }
+
+  function renderMarquee() {
+    if (!signers.length) {
+      marqueeTrack.innerHTML = '<div class="flex items-center gap-2 bg-surface border border-white/10 px-3.5 py-1.5 font-mono text-[11px] sm:text-xs text-slate-400 whitespace-nowrap uppercase tracking-wide"><span>🐟</span>Be the first to sign</div>';
+      return;
+    }
+    function chip(s) {
+      return '<div class="flex items-center gap-2 bg-surface border border-white/10 px-3.5 py-1.5 font-mono text-[11px] sm:text-xs text-slate-300 whitespace-nowrap uppercase tracking-wide">' +
+        '<span>🐟</span>' + escapeHTML(s.name) + '<span class="text-slate-500">signed</span></div>';
+    }
+    var html = signers.slice(0, 12).map(chip).join('');
+    marqueeTrack.innerHTML = html + html;
+  }
+
+  function renderFeed() {
+    if (!signers.length) {
+      signersFeed.innerHTML = '<p class="text-sm text-slate-500 text-center py-6">No signatures yet — you could be the first 🐟</p>';
+      return;
+    }
+    signersFeed.innerHTML = signers.map(function(s) {
+      var timeLabel = s.time || (s.createdAt ? timeAgo(s.createdAt) : 'just now');
+      return '<div class="signer-entry flex items-start gap-3 bg-bgdark/60 border border-white/5 p-3.5">' +
+        '<div class="w-9 h-9 shrink-0 border flex items-center justify-center font-mono font-bold text-xs ' + avatarClasses(s.complaint) + '">' + escapeHTML(initials(s.name)) + '</div>' +
+        '<div class="min-w-0 flex-1">' +
+          '<div class="flex items-center justify-between gap-2">' +
+            '<span class="font-semibold text-sm truncate">' + escapeHTML(s.name) + '</span>' +
+            '<span class="font-mono text-[10px] text-slate-500 shrink-0 uppercase">' + escapeHTML(timeLabel) + '</span>' +
+          '</div>' +
+          '<p class="text-xs text-slate-500 truncate">' + escapeHTML(s.school) + '</p>' +
+          '<span class="inline-block mt-1.5 font-mono text-[9px] font-bold tracking-wide px-2 py-0.5 border uppercase ' + chipColorClasses(s.complaint) + '">' + escapeHTML(s.complaint) + '</span>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  function pulseCounters() {
+    counterEls.forEach(function(el) {
+      el.classList.remove('pulse-once');
+      void el.offsetWidth;
+      el.classList.add('pulse-once');
+    });
+  }
+
+  /* Load real stats from the backend */
+  async function loadStats() {
+    try {
+      var res = await fetch(API_BASE + '/stats');
+      var data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Could not load stats.');
+
+      signatureCount = data.count || 0;
+      signers = data.recent || [];
+      renderMarquee();
+      renderFeed();
+      counterEls.forEach(function(el) { countUp(el, signatureCount); });
+    } catch (err) {
+      counterEls.forEach(function(el) { el.textContent = '0'; });
+
+      signersFeed.innerHTML = '<p class="text-sm text-slate-500 text-center py-6">Could not reach the server. It may be waking up — refresh in a few seconds.</p>';
+      marqueeTrack.innerHTML = '<div class="flex items-center gap-2 bg-surface border border-white/10 px-3.5 py-1.5 font-mono text-[11px] text-slate-400 whitespace-nowrap uppercase tracking-wide">🐟 Connecting…</div>';
+    }
+  }
+
+  /* Petition form */
+  var petitionForm = document.getElementById('petitionForm');
+  var submitBtn = petitionForm.querySelector('button[type="submit"]');
+  petitionForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    var nameInput = document.getElementById('fullName');
+    var schoolInput = document.getElementById('gradeSchool');
+    var complaintInput = document.getElementById('mainComplaint');
+
+    var name = nameInput.value.trim();
+    var school = schoolInput.value.trim();
+    var complaint = complaintInput.value;
+
+    if (!name || !school) {
+      showToast('Please fill in your name and grade/school first 🙏', 'error');
+      return;
+    }
+
+    var originalLabel = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Signing…';
+
+    try {
+      var res = await fetch(API_BASE + '/sign', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, school: school, complaint: complaint })
+      });
+      var data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Could not save your signature.');
+
+      signatureCount = data.count;
+      signers.unshift(data.signer);
+      renderCounter();
+      renderMarquee();
+      renderFeed();
+      pulseCounters();
+
+      petitionForm.reset();
+      showToast('Thanks for signing, ' + name.split(' ')[0] + '! 🐟 You\'re #' + signatureCount.toLocaleString() + '.', 'success');
+    } catch (err) {
+      var isNetworkFail = err instanceof TypeError;
+      showToast(isNetworkFail ? 'Could not reach the server — it may be waking up. Try again in a few seconds.' : err.message, 'error');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    }
+  });
+
+  /* Copy share link */
+  document.getElementById('copyShareBtn').addEventListener('click', async function() {
+    var url = window.location.href;
+    try {
+      await navigator.clipboard.writeText(url);
+      showToast('Link copied! Now go make some noise 📣', 'success');
+    } catch (err) {
+      try {
+        var textarea = document.createElement('textarea');
+        textarea.value = url;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('Link copied! Now go make some noise 📣', 'success');
+      } catch (err2) {
+        showToast('Could not copy automatically — copy the link from your address bar.', 'error');
+      }
+    }
+  });
+
+  document.getElementById('shareTwitter').addEventListener('click', function() {
+    var text = encodeURIComponent('Join The Fish Market Union — students reclaiming their time. 🐟');
+    var url = encodeURIComponent(window.location.href);
+    window.open('https://twitter.com/intent/tweet?text=' + text + '&url=' + url, '_blank', 'noopener,noreferrer');
+  });
+
+  document.getElementById('shareWhatsapp').addEventListener('click', function() {
+    var text = encodeURIComponent('Join The Fish Market Union — students reclaiming their time. 🐟 ' + window.location.href);
+    window.open('https://wa.me/?text=' + text, '_blank', 'noopener,noreferrer');
+  });
+
+  /* Count-up on load */
+  function countUp(el, target, duration) {
+    duration = duration || 1400;
+    var start = performance.now();
+    function tick(now) {
+      var progress = Math.min((now - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(eased * target).toLocaleString();
+      if (progress < 1) requestAnimationFrame(tick);
+      else el.textContent = target.toLocaleString();
+    }
+    requestAnimationFrame(tick);
+  }
+
+  /* Init */
+  loadStats();
+})();
+</script>
+</body>
+</html>
